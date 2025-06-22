@@ -1,801 +1,2573 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AncestorExchange - Global Ancestral Currency Exchange Platform</title>
+    <title>AncestorExchange - 全球實體祭祀貨幣兌換平台</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;800&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #8B5CF6;
+            --secondary: #EC4899;
+            --accent: #F59E0B;
+            --gold: #FFD700;
+            --mystic-purple: #6B46C1;
+            --cosmic-blue: #3B82F6;
         }
-
+        
         body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 30%);
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        
+        .logo-font {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
         }
-
-        /* Header */
-        header {
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
+        
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -8px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card {
+            background-color: rgba(26, 32, 44, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+        
+        .navbar {
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
             z-index: 1000;
-            border-bottom: 2px solid #d4af37;
         }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #d4af37;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo::before {
-            content: "💰";
-            margin-right: 10px;
-            font-size: 2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            color: #d4af37;
-        }
-
-        .cta-button {
-            background: linear-gradient(45deg, #d4af37, #f4e68c);
-            color: #1a1a1a;
-            padding: 12px 24px;
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
             border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
         }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
         }
-
-        /* Hero Section */
+        
+        .btn-secondary {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        }
+        
         .hero {
+            position: relative;
+            overflow: hidden;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23d4af37" width="1200" height="800" opacity="0.1"/><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="%23d4af37" stroke-width="0.5" opacity="0.3"/></pattern><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            padding-top: 100px;
+        }
+        
+        .hero:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.4;
+            z-index: 0;
         }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #d4af37, #f4e68c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-content p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 6rem 0;
-            background: white;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #1a1a1a;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-
+        
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Currency Section */
-        .currencies {
-            padding: 6rem 0;
-            background: linear-gradient(135deg, #1a1a1a, #2d1810);
-            color: white;
-        }
-
-        .currencies h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #d4af37;
-        }
-
-        .currency-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .currency-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            transition: all 0.3s;
-        }
-
-        .currency-card:hover {
-            border-color: #d4af37;
-            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
-        }
-
-        .currency-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .currency-flag {
-            font-size: 2rem;
-            margin-right: 15px;
-        }
-
-        .currency-info h3 {
-            color: #d4af37;
-            font-size: 1.3rem;
-        }
-
-        .currency-details {
-            margin-top: 1rem;
-        }
-
-        .currency-details p {
-            margin: 0.5rem 0;
-            opacity: 0.9;
-        }
-
-        /* Process Section */
-        .process {
-            padding: 6rem 0;
-            background: white;
-        }
-
-        .process h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #1a1a1a;
-        }
-
-        .process-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            background: linear-gradient(45deg, #d4af37, #f4e68c);
-            color: white;
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .stats-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .section-title.center:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .language-selector {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+        }
+        
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            background: rgba(26, 32, 44, 0.95);
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+            z-index: 100;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            top: 40px;
+            right: 0;
+            backdrop-filter: blur(15px);
+        }
+        
+        .language-selector:hover .language-dropdown {
+            display: block;
+        }
+        
+        .currency-symbol {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.5;
+            color: var(--accent);
+            text-shadow: 0 0 12px rgba(245, 158, 11, 0.7), 0 0 25px rgba(139, 92, 246, 0.3);
+            animation: symbolFloat 15s infinite linear;
+            z-index: 1;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        
+        @keyframes symbolFloat {
+            0% { 
+                transform: translateY(100vh) rotate(0deg); 
+                opacity: 0.25;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% { 
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .currency-card {
+            background: rgba(26, 32, 44, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .currency-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.3);
+        }
+        
+        .currency-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .currency-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
         }
-
-        .step h3 {
-            margin-bottom: 1rem;
-            color: #1a1a1a;
+        
+        .price-tag {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
         }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 6rem 0;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
-
-        .pricing h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #1a1a1a;
-        }
-
-        .pricing-table {
+        
+        .modal-content {
+            background: rgba(26, 32, 44, 0.95);
+            margin: 5% auto;
+            padding: 0;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            width: 90%;
             max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+            backdrop-filter: blur(15px);
         }
-
-        .pricing-header {
-            background: linear-gradient(45deg, #d4af37, #f4e68c);
-            color: white;
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: var(--accent);
+        }
+        
+        .process-step {
+            background: rgba(26, 32, 44, 0.5);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
             padding: 2rem;
             text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
-
-        .pricing-body {
-            padding: 2rem;
+        
+        .process-step:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
         }
-
-        .pricing-tier {
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 20px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            border-left: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .qr-code {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        /* 修复顶部导航栏 */
+        .desktop-nav {
+            display: flex;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid #eee;
+            position: relative;
         }
-
-        .pricing-tier:last-child {
-            border-bottom: none;
+        
+        .desktop-nav a {
+            margin: 0 10px;
         }
-
-        /* Stats Section */
-        .stats {
-            padding: 6rem 0;
-            background: linear-gradient(135deg, #1a1a1a, #2d1810);
-            color: white;
+        
+        /* 修复服务流程演示卡片位置 */
+        .demo-card-container {
+            position: absolute;
+            right: 20px;
+            top: 100%;
+            margin-top: 15px;
+            width: 320px;
+            z-index: 100;
         }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
+        
+        .demo-card {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 10px;
+            width: 320px;
+            z-index: 100;
         }
-
-        .stat h3 {
-            font-size: 3rem;
-            color: #d4af37;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* Footer */
-        footer {
-            background: #000;
-            color: white;
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            color: #d4af37;
-            margin-bottom: 1rem;
-        }
-
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
+        
+        .demo-trigger:hover + .demo-card,
+        .demo-card:hover {
             display: block;
-            margin: 0.5rem 0;
         }
-
-        .footer-section a:hover {
-            color: #d4af37;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #333;
-            opacity: 0.7;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
+        
+        @media (max-width: 1024px) {
+            .desktop-nav {
                 display: none;
             }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content p {
-                font-size: 1.1rem;
-            }
-
-            .currency-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .process-steps {
-                grid-template-columns: 1fr;
+            
+            .demo-card-container {
+                display: none;
             }
         }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        
+        @media (max-width: 768px) {
+            .logo-font {
+                font-size: 1.5rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.5rem;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .currency-symbol {
+                font-size: 1.5rem;
+                opacity: 0.25;
+                text-shadow: 0 0 8px rgba(245, 158, 11, 0.4), 0 0 16px rgba(139, 92, 246, 0.2);
+            }
+            
+            .stats-number {
+                font-size: 1.75rem;
+            }
+            
+            .hero {
+                padding-top: 100px;
+                min-height: calc(100vh - 60px);
+            }
+            
+            .hero h1 {
+                font-size: 2.25rem;
+                line-height: 1.2;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.875rem;
+            }
+            
+            .mobile-menu {
+                width: 100vw;
+                right: 0;
+                padding: 1.5rem;
+            }
         }
-
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #d4af37;
-            border-radius: 4px;
+        
+        @media (max-width: 640px) {
+            .logo-font {
+                font-size: 1.25rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 0.9rem;
+            }
+            
+            .stats-number {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <a href="#" class="logo">AncestorExchange</a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#currencies">Currencies</a></li>
-                <li><a href="#process">How It Works</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
-            <a href="#exchange" class="cta-button">Start Exchange</a>
-        </nav>
-    </header>
+    <!-- 全球各國貨幣符號飄浮 -->
+    <!-- 人民幣符號 -->
+    <div class="currency-symbol" style="left: 5%; animation-delay: 0s;">¥</div>
+    <div class="currency-symbol" style="left: 15%; animation-delay: 2s;">￥</div>
+    <div class="currency-symbol" style="left: 25%; animation-delay: 4s;">円</div>
+    <div class="currency-symbol" style="left: 35%; animation-delay: 6s;">₩</div>
+    <div class="currency-symbol" style="left: 45%; animation-delay: 8s;">$</div>
+    <div class="currency-symbol" style="left: 55%; animation-delay: 10s;">€</div>
+    <div class="currency-symbol" style="left: 65%; animation-delay: 12s;">£</div>
+    <div class="currency-symbol" style="left: 75%; animation-delay: 14s;">₹</div>
+    
+    <!-- 更多貨幣符號 -->
+    <div class="currency-symbol" style="left: 85%; animation-delay: 16s;">¢</div>
+    <div class="currency-symbol" style="left: 95%; animation-delay: 18s;">₽</div>
+    <div class="currency-symbol" style="left: 7%; animation-delay: 20s;">₦</div>
+    <div class="currency-symbol" style="left: 17%; animation-delay: 22s;">₡</div>
+    <div class="currency-symbol" style="left: 27%; animation-delay: 24s;">₨</div>
+    <div class="currency-symbol" style="left: 37%; animation-delay: 26s;">₪</div>
+    <div class="currency-symbol" style="left: 47%; animation-delay: 28s;">₫</div>
+    <div class="currency-symbol" style="left: 57%; animation-delay: 30s;">₭</div>
+    <div class="currency-symbol" style="left: 67%; animation-delay: 32s;">₮</div>
+    <div class="currency-symbol" style="left: 77%; animation-delay: 34s;">₯</div>
+    <div class="currency-symbol" style="left: 87%; animation-delay: 36s;">₰</div>
+    <div class="currency-symbol" style="left: 97%; animation-delay: 38s;">₱</div>
+    <div class="currency-symbol" style="left: 8%; animation-delay: 40s;">₲</div>
+    <div class="currency-symbol" style="left: 18%; animation-delay: 42s;">₳</div>
+    <div class="currency-symbol" style="left: 28%; animation-delay: 44s;">₴</div>
+    <div class="currency-symbol" style="left: 38%; animation-delay: 46s;">₵</div>
+    <div class="currency-symbol" style="left: 48%; animation-delay: 48s;">₶</div>
+    <div class="currency-symbol" style="left: 58%; animation-delay: 50s;">₷</div>
+    <div class="currency-symbol" style="left: 68%; animation-delay: 52s;">₸</div>
+    <div class="currency-symbol" style="left: 78%; animation-delay: 54s;">₹</div>
+    
+    <!-- 特殊貨幣符號 -->
+    <div class="currency-symbol" style="left: 88%; animation-delay: 56s;">₺</div>
+    <div class="currency-symbol" style="left: 98%; animation-delay: 58s;">₻</div>
+    <div class="currency-symbol" style="left: 9%; animation-delay: 60s;">₼</div>
+    <div class="currency-symbol" style="left: 19%; animation-delay: 62s;">₽</div>
+    <div class="currency-symbol" style="left: 29%; animation-delay: 64s;">₾</div>
+    <div class="currency-symbol" style="left: 39%; animation-delay: 66s;">₿</div>
+    <div class="currency-symbol" style="left: 49%; animation-delay: 68s;">＄</div>
+    <div class="currency-symbol" style="left: 59%; animation-delay: 70s;">￠</div>
+    <div class="currency-symbol" style="left: 69%; animation-delay: 72s;">￡</div>
+    <div class="currency-symbol" style="left: 79%; animation-delay: 74s;">￢</div>
+    <div class="currency-symbol" style="left: 89%; animation-delay: 76s;">￣</div>
+    <div class="currency-symbol" style="left: 99%; animation-delay: 78s;">￤</div>
+    
+    <!-- 第二輪循環增加密度 -->
+    <div class="currency-symbol" style="left: 3%; animation-delay: 80s;">¥</div>
+    <div class="currency-symbol" style="left: 13%; animation-delay: 82s;">$</div>
+    <div class="currency-symbol" style="left: 23%; animation-delay: 84s;">€</div>
+    <div class="currency-symbol" style="left: 33%; animation-delay: 86s;">£</div>
+    <div class="currency-symbol" style="left: 43%; animation-delay: 88s;">₩</div>
+    <div class="currency-symbol" style="left: 53%; animation-delay: 90s;">円</div>
+    <div class="currency-symbol" style="left: 63%; animation-delay: 92s;">₹</div>
+    <div class="currency-symbol" style="left: 73%; animation-delay: 94s;">₽</div>
+    <div class="currency-symbol" style="left: 83%; animation-delay: 96s;">₦</div>
+    <div class="currency-symbol" style="left: 93%; animation-delay: 98s;">₿</div>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed w-full z-50 px-4 py-3">
+        <div class="container mx-auto nav-container">
+            <div class="flex items-center">
+                <div class="logo-font">AncestorExchange</div>
+                <div class="logo-sub ml-2 hidden sm:block">全球祭祀貨幣兌換</div>
+            </div>
+            
+            <!-- 桌面端導航 -->
+            <div class="desktop-nav space-x-6">
+                <a href="#service" class="hover:text-purple-400 transition font-medium">服務介紹</a>
+                <a href="#currencies" class="hover:text-purple-400 transition font-medium">貨幣體系</a>
+                <a href="#process" class="hover:text-purple-400 transition font-medium">兌換流程</a>
+                <a href="#verification" class="hover:text-purple-400 transition font-medium">驗證系統</a>
+                <a href="#pricing" class="hover:text-purple-400 transition font-medium">價格體系</a>
+                <a href="#testimonials" class="hover:text-purple-400 transition font-medium">用戶見證</a>
+            </div>
+            
+            <!-- 桌面端右側功能 -->
+            <div class="hidden lg:flex items-center space-x-4">
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <div class="flex items-center cursor-pointer">
+                        <span class="mr-2">🇭🇰 繁體</span>
+                        <i class="fas fa-chevron-down text-sm"></i>
+                    </div>
+                    <div class="language-dropdown">
+                        <div class="p-4">
+                            <div class="text-center mb-3">
+                                <div class="stats-number">95%</div>
+                                <div class="text-sm text-gray-400">用戶滿意度</div>
+                            </div>
+                            <div class="border-t border-gray-700 pt-3">
+                                <div class="text-left py-2 px-3 hover:bg-gray-800 rounded cursor-pointer">🇨🇳 简体中文</div>
+                                <div class="text-left py-2 px-3 hover:bg-gray-800 rounded cursor-pointer">🇺🇸 English</div>
+                                <div class="text-left py-2 px-3 hover:bg-gray-800 rounded cursor-pointer">🇯🇵 日本語</div>
+                                <div class="text-left py-2 px-3 hover:bg-gray-800 rounded cursor-pointer">🇰🇷 한국어</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 服務流程演示 -->
+                <div class="relative demo-trigger">
+                    <button class="btn-primary px-4 py-2 rounded-full text-sm">
+                        <i class="fas fa-coins mr-1"></i>
+                        服務流程
+                    </button>
+                    <div class="demo-card">
+                        <div class="card p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center mr-3">
+                                    <i class="fas fa-coins text-white"></i>
+                                </div>
+                                <h3 class="text-lg font-bold">兌換流程演示</h3>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold mt-1">1</div>
+                                    <div>
+                                        <h4 class="font-semibold text-purple-300">為祖先開設帳戶</h4>
+                                        <p class="text-sm text-gray-400">填寫祖先基本信息，建立專屬數字帳戶</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold mt-1">2</div>
+                                    <div>
+                                        <h4 class="font-semibold text-blue-300">選擇祭祀貨幣</h4>
+                                        <p class="text-sm text-gray-400">根據文化背景選擇對應國家的天地銀行貨幣</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center text-xs font-bold mt-1">3</div>
+                                    <div>
+                                        <h4 class="font-semibold text-green-300">支付兌換費用</h4>
+                                        <p class="text-sm text-gray-400">使用法幣支付，含印刷費、包裝費和配送費</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 rounded-full bg-yellow-600 flex items-center justify-center text-xs font-bold mt-1">4</div>
+                                    <div>
+                                        <h4 class="font-semibold text-yellow-300">收到實體貨幣</h4>
+                                        <p class="text-sm text-gray-400">收到高品質印刷的祭祀貨幣和二維碼卡片</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 rounded-full bg-red-600 flex items-center justify-center text-xs font-bold mt-1">5</div>
+                                    <div>
+                                        <h4 class="font-semibold text-red-300">完成焚燒儀式</h4>
+                                        <p class="text-sm text-gray-400">按照傳統方式焚燒，掃描二維碼確認到達</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 移動端簡化按鈕 -->
+            <div class="flex lg:hidden items-center space-x-2">
+                <button class="btn-primary px-4 py-2 rounded-full text-sm">
+                    <i class="fas fa-coins mr-1"></i>
+                    兌換
+                </button>
+                <button class="text-white mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="flex justify-between items-center mb-8">
+            <div class="logo-font text-lg">AncestorExchange</div>
+            <button class="mobile-menu-close text-purple-400">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+        <div class="flex flex-col space-y-6">
+            <a href="#service" class="text-lg hover:text-purple-400 transition">服務介紹</a>
+            <a href="#currencies" class="text-lg hover:text-purple-400 transition">貨幣體系</a>
+            <a href="#process" class="text-lg hover:text-purple-400 transition">兌換流程</a>
+            <a href="#verification" class="text-lg hover:text-purple-400 transition">驗證系統</a>
+            <a href="#pricing" class="text-lg hover:text-purple-400 transition">價格體系</a>
+            <a href="#testimonials" class="text-lg hover:text-purple-400 transition">用戶見證</a>
+            
+            <div class="border-t border-gray-700 pt-6">
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold text-gray-400 mb-3">選擇語言</h4>
+                    <div class="grid grid-cols-1 gap-2">
+                        <button class="text-left py-2 px-3 hover:bg-gray-800 rounded">🇭🇰 繁體中文</button>
+                        <button class="text-left py-2 px-3 hover:bg-gray-800 rounded">🇨🇳 簡體中文</button>
+                        <button class="text-left py-2 px-3 hover:bg-gray-800 rounded">🇺🇸 English</button>
+                        <button class="text-left py-2 px-3 hover:bg-gray-800 rounded">🇯🇵 日本語</button>
+                        <button class="text-left py-2 px-3 hover:bg-gray-800 rounded">🇰🇷 한국어</button>
+                    </div>
+                </div>
+                
+                <div class="space-y-3">
+                    <button class="btn-secondary w-full py-3 rounded-full">登錄</button>
+                    <button class="btn-primary w-full py-3 rounded-full">開始兌換</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Honor Your Ancestors Globally</h1>
-                <p>The world's first standardized ancestral currency exchange platform. Send care to your ancestors with authentic ceremonial currencies from any country, delivered worldwide.</p>
-                <a href="#exchange" class="cta-button">Begin Your Journey</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <h2>Why Choose AncestorExchange</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
-                    <h3>Global Reach</h3>
-                    <p>Access authentic ceremonial currencies from multiple countries, standardized for quality and cultural authenticity.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Digital Verification</h3>
-                    <p>Each currency comes with unique QR codes for ceremony completion verification and digital record keeping.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3>Premium Quality</h3>
-                    <p>High-quality printed ceremonial currencies with anti-counterfeiting technology and proper cultural respect.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚚</div>
-                    <h3>Worldwide Delivery</h3>
-                    <p>Secure packaging and global shipping to ensure your ceremonial currencies arrive safely anywhere.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Currency Section -->
-    <section class="currencies" id="currencies">
-        <div class="container">
-            <h2>Available Ceremonial Currencies</h2>
-            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">Authentic ceremonial bank notes designed with cultural respect and traditional elements</p>
-            
-            <div class="currency-grid">
-                <div class="currency-card">
-                    <div class="currency-header">
-                        <div class="currency-flag">🇨🇳</div>
-                        <div class="currency-info">
-                            <h3>Chinese Cultural Region</h3>
-                            <p>天地银行 (Heaven & Earth Bank)</p>
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container mx-auto px-4 hero-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        全球實體<br>
+                        <span class="gradient-text">祭祀貨幣</span><br>
+                        兌換平台
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        為祖先開設專屬帳戶，用法幣兌換各國天地銀行發行的實體祭祀貨幣。完成焚燒儀式後，掃描二維碼驗證，讓您的心意準確送達。
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
+                        <button class="btn-primary px-8 py-4 rounded-full text-lg font-semibold">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            為祖先開戶
+                        </button>
+                        <button class="btn-secondary px-8 py-4 rounded-full text-lg font-semibold">
+                            <i class="fas fa-play mr-2"></i>
+                            觀看演示
+                        </button>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <div class="stats-number">12</div>
+                            <div class="text-sm text-gray-400">國家貨幣</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="stats-number">5000+</div>
+                            <div class="text-sm text-gray-400">成功兌換</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="stats-number">99.9%</div>
+                            <div class="text-sm text-gray-400">配送成功率</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="stats-number">95%</div>
+                            <div class="text-sm text-gray-400">用戶滿意度</div>
                         </div>
                     </div>
-                    <div class="currency-details">
-                        <p><strong>Currency:</strong> 天堂通宝 (Heaven Universal Currency)</p>
-                        <p><strong>Denominations:</strong> ¥10,000 - ¥1,000,000</p>
-                        <p><strong>Features:</strong> Traditional red & gold colors, Jade Emperor imagery, dragon & phoenix patterns</p>
-                        <p><strong>Cultural Elements:</strong> "孝道传承，功德无量" (Filial piety inheritance, boundless merit)</p>
-                    </div>
                 </div>
-
-                <div class="currency-card">
-                    <div class="currency-header">
-                        <div class="currency-flag">🇯🇵</div>
-                        <div class="currency-info">
-                            <h3>Japan</h3>
-                            <p>あの世銀行 (Afterlife Bank)</p>
+                
+                <div class="hidden lg:block">
+                    <div class="card p-8 relative">
+                        <div class="w-full h-64 bg-gradient-to-r from-purple-700 to-indigo-800 rounded-xl flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-coins text-yellow-400 text-5xl mb-4"></i>
+                                <h3 class="text-2xl font-bold">全球祭祀貨幣兌換平台</h3>
+                                <p class="text-gray-300 mt-2">傳統與現代的完美結合</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="currency-details">
-                        <p><strong>Currency:</strong> 極楽円 (Gokuraku Yen)</p>
-                        <p><strong>Denominations:</strong> ¥10,000 - ¥1,000,000</p>
-                        <p><strong>Features:</strong> Purple & gold colors, Amida Buddha imagery, lotus & crane patterns</p>
-                        <p><strong>Cultural Elements:</strong> "南無阿弥陀佛" Buddhist sutras, sakura motifs</p>
-                    </div>
-                </div>
-
-                <div class="currency-card">
-                    <div class="currency-header">
-                        <div class="currency-flag">🇰🇷</div>
-                        <div class="currency-info">
-                            <h3>South Korea</h3>
-                            <p>저승은행 (Afterworld Bank)</p>
+                        <div class="mt-6">
+                            <div class="flex justify-between mb-4">
+                                <span class="text-gray-400">今日兌換量</span>
+                                <span class="text-green-400">¥68,500</span>
+                            </div>
+                            <div class="flex justify-between mb-4">
+                                <span class="text-gray-400">本月用戶數</span>
+                                <span class="text-yellow-400">1,286人</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">最新匯率</span>
+                                <span class="text-blue-400">1:10,000</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="currency-details">
-                        <p><strong>Currency:</strong> 저승원 (Jeoseung Won)</p>
-                        <p><strong>Denominations:</strong> ₩10,000 - ₩1,000,000</p>
-                        <p><strong>Features:</strong> Traditional dancheong colors, Confucian imagery, taeguk patterns</p>
-                        <p><strong>Cultural Elements:</strong> "효도" (filial piety), mugunghwa & hanbok motifs</p>
-                    </div>
-                </div>
-
-                <div class="currency-card">
-                    <div class="currency-header">
-                        <div class="currency-flag">🇻🇳</div>
-                        <div class="currency-info">
-                            <h3>Vietnam</h3>
-                            <p>Ngân hàng Âm phủ (Underworld Bank)</p>
-                        </div>
-                    </div>
-                    <div class="currency-details">
-                        <p><strong>Currency:</strong> Tiền Âm phủ (Underworld Money)</p>
-                        <p><strong>Denominations:</strong> ₫100,000 - ₫10,000,000</p>
-                        <p><strong>Features:</strong> Red & yellow colors, Jade Emperor imagery, dragon & lotus patterns</p>
-                        <p><strong>Cultural Elements:</strong> "Hiếu thảo" (filial piety), Vietnamese traditional architecture</p>
-                    </div>
-                </div>
-
-                <div class="currency-card">
-                    <div class="currency-header">
-                        <div class="currency-flag">🇺🇸</div>
-                        <div class="currency-info">
-                            <h3>North America</h3>
-                            <p>Universal Afterlife Bank</p>
-                        </div>
-                    </div>
-                    <div class="currency-details">
-                        <p><strong>Currency:</strong> Eternal Dollar</p>
-                        <p><strong>Denominations:</strong> $1,000 - $100,000</p>
-                        <p><strong>Features:</strong> Deep blue & gold colors, Guanyin imagery, Great Wall motifs</p>
-                        <p><strong>Cultural Elements:</strong> Blend of Chinese heritage with Western elements</p>
-                    </div>
-                </div>
-
-                <div class="currency-card">
-                    <div class="currency-header">
-                        <div class="currency-flag">🇪🇺</div>
-                        <div class="currency-info">
-                            <h3>Europe</h3>
-                            <p>Celestial Bank of Europe</p>
-                        </div>
-                    </div>
-                    <div class="currency-details">
-                        <p><strong>Currency:</strong> Celestial Euro</p>
-                        <p><strong>Denominations:</strong> €1,000 - €100,000</p>
-                        <p><strong>Features:</strong> Royal blue & gold colors, traditional Chinese deities, European architectural elements</p>
-                        <p><strong>Cultural Elements:</strong> Multicultural design respecting European diversity</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Process Section -->
-    <section class="process" id="process">
-        <div class="container">
-            <h2>How It Works</h2>
-            <div class="process-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Create Accounts</h3>
-                    <p>Register your personal account and create dedicated accounts for your ancestors with their information and relationships.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Select Currency</h3>
-                    <p>Choose the appropriate ceremonial currency based on cultural background or personal preference from our available countries.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Exchange & Pay</h3>
-                    <p>Enter the amount you wish to exchange, pay the service fee, and provide your delivery address for shipping.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Receive Package</h3>
-                    <p>Receive your premium packaged ceremonial currencies with cultural instructions and unique QR verification codes.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <h3>Perform Ceremony</h3>
-                    <p>Follow the provided cultural guidelines to respectfully perform the burning ceremony in a safe, appropriate location.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">6</div>
-                    <h3>Digital Verification</h3>
-                    <p>Scan the QR code after ceremony completion to verify the offering and add the currency type to your ancestor's account.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2>Exchange Fees</h2>
-            <div class="pricing-table">
-                <div class="pricing-header">
-                    <h3>Service Fee Structure</h3>
-                    <p>Transparent pricing based on exchange amount</p>
-                </div>
-                <div class="pricing-body">
-                    <div class="pricing-tier">
-                        <div>
-                            <strong>$10 - $49</strong>
-                            <p>Minimum exchange amount</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <strong>8% Service Fee</strong>
-                            <p>+ Printing & Shipping</p>
-                        </div>
-                    </div>
-                    <div class="pricing-tier">
-                        <div>
-                            <strong>$50 - $99</strong>
-                            <p>Standard range</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <strong>7% Service Fee</strong>
-                            <p>Free standard shipping</p>
-                        </div>
-                    </div>
-                    <div class="pricing-tier">
-                        <div>
-                            <strong>$100 - $199</strong>
-                            <p>Popular choice</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <strong>6% Service Fee</strong>
-                            <p>Free standard shipping</p>
-                        </div>
-                    </div>
-                    <div class="pricing-tier">
-                        <div>
-                            <strong>$200 - $499</strong>
-                            <p>Premium range</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <strong>5% Service Fee</strong>
-                            <p>Free express shipping</p>
-                        </div>
-                    </div>
-                    <div class="pricing-tier">
-                        <div>
-                            <strong>$500 - $999</strong>
-                            <p>High-value exchange</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <strong>4% Service Fee</strong>
-                            <p>Free express shipping</p>
-                        </div>
-                    </div>
-                    <div class="pricing-tier">
-                        <div>
-                            <strong>$1000+</strong>
-                            <p>Maximum exchange amount</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <strong>3% Service Fee</strong>
-                            <p>VIP handling & shipping</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 2rem;">
-                <p style="color: #666; font-style: italic;">
-                    First-time users receive 50% off service fees. Holiday periods may include seasonal adjustments.
+    <!-- Service Introduction -->
+    <section class="py-20 bg-gray-900 bg-opacity-50" id="service">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title center">核心服務優勢</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto">
+                    AncestorExchange通過數字化創新，為全球用戶提供文化尊重、便捷高效的祭祀解決方案
                 </p>
             </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card p-8 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">全球統一標準</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        統一的全球祭祀貨幣標準，消除地域差異困扰，高質量印刷替代粗制濫造產品
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="card p-8 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">二維碼驗證系統</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        每張貨幣都有唯一的加密二維碼，確保儀式完成，提供心理確認和數字記錄
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="card p-8 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">全球快速配送</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        覆盖95%國家和地區，3-7個工作日標準配送，重要節日前優先配送服務
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="card p-8 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">環保責任</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        使用環保材料和可回收包裝，減少傳統祭祀對環境的影響，符合現代環保要求
+                    </p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="card p-8 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">家族協作管理</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        支持多家庭成員共同管理祖先帳戶，遠距離親屬可參與祭祀，增進家族凝聚力
+                    </p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="card p-8 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">安全隱私保護</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        銀行級數據安全標準，嚴格隱私政策，祖先信息和家族數據絕對保密
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat">
-                    <h3>$115B</h3>
-                    <p>Global ceremonial currency market potential</p>
+    <!-- Currency System -->
+    <section class="py-20" id="currencies">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title center">全球祭祀貨幣體系</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto">
+                    針對不同文化背景，我們設計了專屬的天地銀行系統和祭祀貨幣
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- 中華天地銀行 -->
+                <div class="currency-card p-6" onclick="openModal('china-modal')">
+                    <div class="currency-image" style="background-image: linear-gradient(135deg, #DC2626 0%, #FCD34D 100%);">
+                        <div class="currency-badge">熱銷</div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-bold">天堂通寶</h3>
+                            <p class="text-sm opacity-90">中華天地銀行</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-400">兌換比例</span>
+                            <span class="text-sm text-yellow-400">1:10,000</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-400">手續費</span>
+                            <span class="text-sm text-red-400">7%</span>
+                        </div>
+                        <div class="price-tag text-center">
+                            ¥68起
+                        </div>
+                        <p class="text-xs text-gray-500 text-center mt-2">最低兌換額度 ¥68</p>
+                    </div>
                 </div>
-                <div class="stat">
-                    <h3>70M+</h3>
-                    <p>Overseas Chinese population worldwide</p>
+
+                <!-- 日本あの世銀行 -->
+                <div class="currency-card p-6" onclick="openModal('japan-modal')">
+                    <div class="currency-image" style="background-image: linear-gradient(135deg, #7C3AED 0%, #F59E0B 100%);">
+                        <div class="currency-badge">精品</div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-bold">極樂円</h3>
+                            <p class="text-sm opacity-90">あの世銀行</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-400">兌換比例</span>
+                            <span class="text-sm text-yellow-400">1:150</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-400">手續費</span>
+                            <span class="text-sm text-red-400">7%</span>
+                        </div>
+                        <div class="price-tag text-center">
+                            ¥72起
+                        </div>
+                        <p class="text-xs text-gray-500 text-center mt-2">最低兌換額度 ¥72</p>
+                    </div>
                 </div>
-                <div class="stat">
-                    <h3>6</h3>
-                    <p>Countries & regions supported</p>
+
+                <!-- 韓國저승은행 -->
+                <div class="currency-card p-6" onclick="openModal('korea-modal')">
+                    <div class="currency-image" style="background-image: linear-gradient(135deg, #059669 0%, #3B82F6 100%);">
+                        <div class="currency-badge">新品</div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-bold">저승원</h3>
+                            <p class="text-sm opacity-90">저승은행</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-400">兌換比例</span>
+                            <span class="text-sm text-yellow-400">1:1,300</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-400">手續費</span>
+                            <span class="text-sm text-red-400">7%</span>
+                        </div>
+                        <div class="price-tag text-center">
+                            ¥72起
+                        </div>
+                        <p class="text-xs text-gray-500 text-center mt-2">最低兌換額度 ¥72</p>
+                    </div>
                 </div>
-                <div class="stat">
-                    <h3>99.9%</h3>
-                    <p>Customer satisfaction rate</p>
+
+                <!-- 越南Ngân hàng Âm phủ -->
+                <div class="currency-card p-6" onclick="openModal('vietnam-modal')">
+                    <div class="currency-image" style="background-image: linear-gradient(135deg, #DC2626 0%, #FBBF24 100%);">
+                        <div class="currency-badge">推薦</div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-bold">Tiền Âm phủ</h3>
+                            <p class="text-sm opacity-90">Ngân hàng Âm phủ</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-400">兌換比例</span>
+                            <span class="text-sm text-yellow-400">1:25,000</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-400">手續費</span>
+                            <span class="text-sm text-red-400">6.5%</span>
+                        </div>
+                        <div class="price-tag text-center">
+                            ¥70起
+                        </div>
+                        <p class="text-xs text-gray-500 text-center mt-2">最低兌換額度 ¥70</p>
+                    </div>
+                </div>
+
+                <!-- 新加坡/馬來西亞多元文化版 -->
+                <div class="currency-card p-6" onclick="openModal('singapore-modal')">
+                    <div class="currency-image" style="background-image: linear-gradient(135deg, #059669 0%, #F59E0B 100%);">
+                        <div class="currency-badge">多元</div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-bold">Celestial Dollar</h3>
+                            <p class="text-sm opacity-90">天地銀行 (多元版)</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-400">兌換比例</span>
+                            <span class="text-sm text-yellow-400">1:1,000</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-400">手續費</span>
+                            <span class="text-sm text-red-400">6%</span>
+                        </div>
+                        <div class="price-tag text-center">
+                            ¥75起
+                        </div>
+                        <p class="text-xs text-gray-500 text-center mt-2">最低兌換額度 ¥75</p>
+                    </div>
+                </div>
+
+                <!-- 美國Universal Bank -->
+                <div class="currency-card p-6" onclick="openModal('usa-modal')">
+                    <div class="currency-image" style="background-image: linear-gradient(135deg, #1E40AF 0%, #F59E0B 100%);">
+                        <div class="currency-badge">國際</div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-bold">Eternal Dollar</h3>
+                            <p class="text-sm opacity-90">Universal Bank</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-400">兌換比例</span>
+                            <span class="text-sm text-yellow-400">1:10,000</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-400">手續費</span>
+                            <span class="text-sm text-red-400">7.5%</span>
+                        </div>
+                        <div class="price-tag text-center">
+                            ¥77起
+                        </div>
+                        <p class="text-xs text-gray-500 text-center mt-2">最低兌換額度 ¥77</p>
+                    </div>
+                </div>
+
+                <!-- 英國Sacred Pound -->
+                <div class="currency-card p-6" onclick="openModal('uk-modal')">
+                    <div class="currency-image" style="background-image: linear-gradient(135deg, #7C2D12 0%, #F59E0B 100%);">
+                        <div class="currency-badge">經典</div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-bold">Sacred Pound</h3>
+                            <p class="text-sm opacity-90">Universal Bank UK</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-400">兌換比例</span>
+                            <span class="text-sm text-yellow-400">1:1,000</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-400">手續費</span>
+                            <span class="text-sm text-red-400">8%</span>
+                        </div>
+                        <div class="price-tag text-center">
+                            ¥81起
+                        </div>
+                        <p class="text-xs text-gray-500 text-center mt-2">最低兌換額度 ¥81</p>
+                    </div>
+                </div>
+
+                <!-- 歐盟Celestial Euro -->
+                <div class="currency-card p-6" onclick="openModal('eu-modal')">
+                    <div class="currency-image" style="background-image: linear-gradient(135deg, #1E40AF 0%, #FBBF24 100%);">
+                        <div class="currency-badge">聯盟</div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-bold">Celestial Euro</h3>
+                            <p class="text-sm opacity-90">Universal Bank EU</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-400">兌換比例</span>
+                            <span class="text-sm text-yellow-400">1:1,000</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-400">手續費</span>
+                            <span class="text-sm text-red-400">7.5%</span>
+                        </div>
+                        <div class="price-tag text-center">
+                            ¥78起
+                        </div>
+                        <p class="text-xs text-gray-500 text-center mt-2">最低兌換額度 ¥78</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 價格說明 -->
+            <div class="mt-12 card p-6">
+                <h3 class="text-xl font-bold mb-4 text-center">價格結構說明</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <i class="fas fa-print text-purple-400 text-2xl mb-2"></i>
+                        <h4 class="font-semibold mb-2">印刷製作費</h4>
+                        <p class="text-sm text-gray-400">高品質防偽印刷，每張成本¥1.2-2.5</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-box text-yellow-400 text-2xl mb-2"></i>
+                        <h4 class="font-semibold mb-2">包裝材料費</h4>
+                        <p class="text-sm text-gray-400">專業防潮包裝，含二維碼卡片</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-shipping-fast text-green-400 text-2xl mb-2"></i>
+                        <h4 class="font-semibold mb-2">全球配送費</h4>
+                        <p class="text-sm text-gray-400">DHL/FedEx快遞，3-7天送達</p>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-gradient-to-r from-purple-900 to-blue-900 rounded-xl text-center">
+                    <p class="text-sm text-gray-300">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        所有價格含稅，訂單≥¥350享免費標準配送，重要節日期間享有優先處理
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exchange Process -->
+    <section class="py-20 bg-gray-900 bg-opacity-50" id="process">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title center">兌換流程</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto">
+                    簡單五步驟，完成從法幣兌換到祖先帳戶入賬的全過程
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <!-- Step 1 -->
+                <div class="process-step">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">註冊開戶</h3>
+                    <p class="text-sm text-gray-400">
+                        為自己和祖先分別開設帳戶，填寫基本信息，建立家族關係連結
+                    </p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="process-step">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-green-600 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">選擇貨幣</h3>
+                    <p class="text-sm text-gray-400">
+                        根據文化背景選擇對應國家的祭祀貨幣，查看兌換比例和手續費
+                    </p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="process-step">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-green-600 to-yellow-600 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">支付兌換</h3>
+                    <p class="text-sm text-gray-400">
+                        輸入兌換金額和收貨地址，使用多種支付方式完成付款
+                    </p>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="process-step">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-yellow-600 to-red-600 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">4</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">收貨焚燒</h3>
+                    <p class="text-sm text-gray-400">
+                        收到高品質祭祀貨幣和二維碼卡片，按傳統方式進行焚燒儀式
+                    </p>
+                </div>
+                
+                <!-- Step 5 -->
+                <div class="process-step">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-red-600 to-purple-600 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">5</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">掃碼驗證</h3>
+                    <p class="text-sm text-gray-400">
+                        掃描二維碼確認儀式完成，對應金額自動進入祖先數字帳戶
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 詳細流程說明 -->
+            <div class="mt-16 grid md:grid-cols-2 gap-12">
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">實體流程</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-sm font-bold mt-1">📦</div>
+                            <div>
+                                <h4 class="font-semibold">專業包裝</h4>
+                                <p class="text-sm text-gray-400">使用傳統紅色/金色包裝，防潮防折設計，確保貨幣品質</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold mt-1">🚚</div>
+                            <div>
+                                <h4 class="font-semibold">快速配送</h4>
+                                <p class="text-sm text-gray-400">與DHL、FedEx合作，提供實時追蹤，確保安全送達</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-sm font-bold mt-1">📋</div>
+                            <div>
+                                <h4 class="font-semibold">完整指導</h4>
+                                <p class="text-sm text-gray-400">附多語言使用說明，仪式安全指導和文化背景介紹</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">數字流程</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-yellow-600 flex items-center justify-center text-sm font-bold mt-1">🔐</div>
+                            <div>
+                                <h4 class="font-semibold">防偽驗證</h4>
+                                <p class="text-sm text-gray-400">每張貨幣都有唯一二維碼，採用AES-256加密，確保安全性</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-sm font-bold mt-1">📱</div>
+                            <div>
+                                <h4 class="font-semibold">一鍵確認</h4>
+                                <p class="text-sm text-gray-400">掃描後即時驗證，自動記錄到區塊鏈，永久保存記錄</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-sm font-bold mt-1">👥</div>
+                            <div>
+                                <h4 class="font-semibold">家族共享</h4>
+                                <p class="text-sm text-gray-400">儀式完成後通知所有家族成員，共同見證心意送達</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Verification System -->
+    <section class="py-20" id="verification">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title center">二維碼驗證系統</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto">
+                    創新的二維碼驗證技術，確保每次儀式的完成都得到數字確認
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">技術特點</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center mr-4 shrink-0">
+                                <i class="fas fa-lock text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">加密安全</h4>
+                                <p class="text-gray-300">採用AES-256加密算法，每個二維碼都包含唯一的訂單信息、時間戳和數字簽名</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-green-600 flex items-center justify-center mr-4 shrink-0">
+                                <i class="fas fa-shield-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">防重複使用</h4>
+                                <p class="text-gray-300">一次性驗證機制，掃描後立即失效，防止重複使用和惡意攻擊</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-green-600 to-yellow-600 flex items-center justify-center mr-4 shrink-0">
+                                <i class="fas fa-link text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">區塊鏈記錄</h4>
+                                <p class="text-gray-300">驗證記錄永久保存在區塊鏈上，確保數據不可篡改，可隨時查詢</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-600 to-red-600 flex items-center justify-center mr-4 shrink-0">
+                                <i class="fas fa-mobile-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">離線支持</h4>
+                                <p class="text-gray-300">支持離線驗證，網絡恢復後自動同步，確保偏遠地區也能正常使用</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-6 text-center">驗證流程演示</h3>
+                    
+                    <!-- QR Code Demo -->
+                    <div class="qr-code mx-auto mb-6">
+                        <div class="w-48 h-48 bg-white flex items-center justify-center">
+                            <div class="text-black text-center">
+                                <i class="fas fa-qrcode text-6xl mb-2"></i>
+                                <p class="text-sm">示例二維碼</p>
+                                <p class="text-xs">AE2025123456</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Verification Steps -->
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3 p-3 bg-gray-800 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-sm font-bold">1</div>
+                            <span class="text-sm">打開AncestorExchange應用</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-gray-800 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold">2</div>
+                            <span class="text-sm">點擊"掃描驗證"功能</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-gray-800 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-sm font-bold">3</div>
+                            <span class="text-sm">對準二維碼進行掃描</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-gray-800 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-yellow-600 flex items-center justify-center text-sm font-bold">4</div>
+                            <span class="text-sm">選擇對應的祖先帳戶</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-gray-800 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-sm font-bold">5</div>
+                            <span class="text-sm">確認金額，完成驗證</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-gradient-to-r from-green-900 to-blue-900 rounded-xl text-center">
+                        <i class="fas fa-check-circle text-green-400 text-2xl mb-2"></i>
+                        <p class="text-sm text-green-300 font-semibold">驗證成功！</p>
+                        <p class="text-xs text-gray-400">金額已成功入賬祖先帳戶</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-20 bg-gray-900 bg-opacity-50" id="pricing">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title center">價格體系</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto">
+                    透明公正的分層定價，滿足不同用戶的需求
+                </p>
+            </div>
+            
+            <!-- 手續費說明 -->
+            <div class="card p-8 mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-center">手續費結構</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-center">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="py-3 px-4 text-purple-400">兌換金額 (人民幣)</th>
+                                <th class="py-3 px-4 text-purple-400">基礎手續費</th>
+                                <th class="py-3 px-4 text-purple-400">印刷製作費</th>
+                                <th class="py-3 px-4 text-purple-400">全球配送費</th>
+                                <th class="py-3 px-4 text-purple-400">總費率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 px-4">¥68 - ¥349</td>
+                                <td class="py-3 px-4 text-red-400">8%</td>
+                                <td class="py-3 px-4">¥15</td>
+                                <td class="py-3 px-4">¥32</td>
+                                <td class="py-3 px-4 text-yellow-400">~15-20%</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 px-4">¥350 - ¥699</td>
+                                <td class="py-3 px-4 text-red-400">7%</td>
+                                <td class="py-3 px-4">¥15</td>
+                                <td class="py-3 px-4 text-green-400">免費</td>
+                                <td class="py-3 px-4 text-yellow-400">~9-11%</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 px-4">¥700 - ¥1,399</td>
+                                <td class="py-3 px-4 text-red-400">6%</td>
+                                <td class="py-3 px-4">¥15</td>
+                                <td class="py-3 px-4 text-green-400">免費</td>
+                                <td class="py-3 px-4 text-yellow-400">~7-8%</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 px-4">¥1,400 - ¥3,499</td>
+                                <td class="py-3 px-4 text-red-400">5%</td>
+                                <td class="py-3 px-4">¥15</td>
+                                <td class="py-3 px-4 text-green-400">免費</td>
+                                <td class="py-3 px-4 text-yellow-400">~5.5-6%</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 px-4">¥3,500 - ¥6,999</td>
+                                <td class="py-3 px-4 text-red-400">4%</td>
+                                <td class="py-3 px-4">¥15</td>
+                                <td class="py-3 px-4 text-green-400">免費</td>
+                                <td class="py-3 px-4 text-yellow-400">~4.5%</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4">¥7,000+</td>
+                                <td class="py-3 px-4 text-red-400">3%</td>
+                                <td class="py-3 px-4">¥15</td>
+                                <td class="py-3 px-4 text-green-400">免費</td>
+                                <td class="py-3 px-4 text-yellow-400">~3.2%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-6 grid md:grid-cols-3 gap-4 text-center">
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <i class="fas fa-gift text-purple-400 text-xl mb-2"></i>
+                        <h4 class="font-semibold">新用戶優惠</h4>
+                        <p class="text-sm text-gray-400">首次兌換享受50%手續費折扣</p>
+                    </div>
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <i class="fas fa-calendar text-green-400 text-xl mb-2"></i>
+                        <h4 class="font-semibold">節日優惠</h4>
+                        <p class="text-sm text-gray-400">重要祭祀節日專享優惠價格</p>
+                    </div>
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <i class="fas fa-users text-yellow-400 text-xl mb-2"></i>
+                        <h4 class="font-semibold">批量優惠</h4>
+                        <p class="text-sm text-gray-400">同時兌換5種以上貨幣享1%折扣</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 配送選項 -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-6 text-center">配送選項</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold">標準配送</h4>
+                                <p class="text-sm text-gray-400">5-7個工作日</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-green-400 font-bold">免費</span>
+                                <p class="text-xs text-gray-500">訂單≥¥350</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold">加急配送</h4>
+                                <p class="text-sm text-gray-400">2-3個工作日</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-yellow-400 font-bold">¥105</span>
+                                <p class="text-xs text-gray-500">額外費用</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold">節日專送</h4>
+                                <p class="text-sm text-gray-400">節日前必達</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-red-400 font-bold">¥168</span>
+                                <p class="text-xs text-gray-500">限時服務</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-6 text-center">支付方式</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-800 rounded-lg text-center">
+                            <i class="fab fa-alipay text-blue-400 text-2xl mb-2"></i>
+                            <p class="text-sm">支付寶</p>
+                        </div>
+                        <div class="p-4 bg-gray-800 rounded-lg text-center">
+                            <i class="fab fa-weixin text-green-400 text-2xl mb-2"></i>
+                            <p class="text-sm">微信支付</p>
+                        </div>
+                        <div class="p-4 bg-gray-800 rounded-lg text-center">
+                            <i class="fab fa-cc-visa text-purple-400 text-2xl mb-2"></i>
+                            <p class="text-sm">信用卡</p>
+                        </div>
+                        <div class="p-4 bg-gray-800 rounded-lg text-center">
+                            <i class="fab fa-paypal text-yellow-400 text-2xl mb-2"></i>
+                            <p class="text-sm">PayPal</p>
+                        </div>
+                        <div class="p-4 bg-gray-800 rounded-lg text-center">
+                            <i class="fas fa-university text-gray-400 text-2xl mb-2"></i>
+                            <p class="text-sm">銀行轉帳</p>
+                        </div>
+                        <div class="p-4 bg-gray-800 rounded-lg text-center">
+                            <i class="fab fa-bitcoin text-orange-400 text-2xl mb-2"></i>
+                            <p class="text-sm">加密貨幣</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20" id="testimonials">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title center">用戶見證</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto">
+                    來自全球用戶的真實回饋，見證AncestorExchange的價值
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center text-lg mr-4">
+                            李
+                        </div>
+                        <div>
+                            <h4 class="font-bold">李先生 | 新加坡</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "在新加坡工作多年，每次回鄉祭祖都很困難。使用AncestorExchange後，不僅貨幣品質很好，二維碼驗證讓我確信心意真的送達了。"
+                    </p>
+                    <div class="text-sm text-purple-400">#海外華人 #便利性</div>
+                </div>
+                
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-pink-600 to-red-600 flex items-center justify-center text-lg mr-4">
+                            王
+                        </div>
+                        <div>
+                            <h4 class="font-bold">王女士 | 香港</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "印刷質量遠超市面上的產品，包裝也很用心。最重要的是環保，不用擔心污染問題，同時保持了對祖先的尊重。"
+                    </p>
+                    <div class="text-sm text-purple-400">#品質保證 #環保責任</div>
+                </div>
+                
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 flex items-center justify-center text-lg mr-4">
+                            陳
+                        </div>
+                        <div>
+                            <h4 class="font-bold">陳先生 | 馬來西亞</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "家族成員遍布全球，現在大家都可以通過平台為祖先進行祭祀。數字帳戶讓我們看到彼此的心意，增進了家族感情。"
+                    </p>
+                    <div class="text-sm text-purple-400">#家族團結 #全球服務</div>
+                </div>
+                
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-green-600 to-yellow-600 flex items-center justify-center text-lg mr-4">
+                            張
+                        </div>
+                        <div>
+                            <h4 class="font-bold">張小姐 | 加拿大</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "客服很專業，配送很快。清明節前特意加急訂購，準時收到。二維碼驗證讓年輕一代也能理解和參與傳統文化。"
+                    </p>
+                    <div class="text-sm text-purple-400">#客服專業 #文化傳承</div>
+                </div>
+                
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-600 to-orange-600 flex items-center justify-center text-lg mr-4">
+                            劉
+                        </div>
+                        <div>
+                            <h4 class="font-bold">劉先生 | 澳洲</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "價格透明，沒有隱藏費用。網站操作簡單，父母也能輕鬆使用。防偽技術給人信心，知道每張貨幣都是正品。"
+                    </p>
+                    <div class="text-sm text-purple-400">#價格透明 #操作簡便</div>
+                </div>
+                
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-red-600 to-pink-600 flex items-center justify-center text-lg mr-4">
+                            黃
+                        </div>
+                        <div>
+                            <h4 class="font-bold">黃女士 | 美國</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "多種語言支持很貼心，各國貨幣設計都很用心。這種創新方式讓傳統文化在現代社會得以延續，值得推薦！"
+                    </p>
+                    <div class="text-sm text-purple-400">#多語言 #創新傳承</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-purple-900 via-indigo-900 to-purple-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                立即開始您的<span class="gradient-text">祭祀兌換</span>之旅
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+                為您的祖先開設專屬帳戶，體驗全球領先的實體祭祀貨幣兌換服務。傳統與現代的完美結合，讓心意準確送達。
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <button class="btn-primary px-10 py-4 rounded-full text-lg font-semibold">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    立即為祖先開戶
+                </button>
+                <button class="btn-secondary px-10 py-4 rounded-full text-lg font-semibold">
+                    <i class="fas fa-phone mr-2"></i>
+                    聯繫客服諮詢
+                </button>
+            </div>
+            
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-400">24/7</div>
+                    <div class="text-sm text-gray-400">客服支持</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-400">95+</div>
+                    <div class="text-sm text-gray-400">國家配送</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-400">SSL</div>
+                    <div class="text-sm text-gray-400">安全加密</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-400">2年</div>
+                    <div class="text-sm text-gray-400">品質保證</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>AncestorExchange</h3>
-                    <p>Honoring traditions through modern technology. Connecting hearts across continents with respect and dignity.</p>
+    <footer class="py-12 bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="logo-font text-2xl mb-4">AncestorExchange</div>
+                    <p class="text-gray-400 mb-4">
+                        全球首個實體祭祀貨幣兌換平台，將傳統文化與現代科技完美融合
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-weixin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h3>Services</h3>
-                    <a href="#currencies">Currency Exchange</a>
-                    <a href="#process">How It Works</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#tracking">Order Tracking</a>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">服務導航</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#service" class="text-gray-400 hover:text-purple-400 transition">服務介紹</a></li>
+                        <li><a href="#currencies" class="text-gray-400 hover:text-purple-400 transition">貨幣體系</a></li>
+                        <li><a href="#process" class="text-gray-400 hover:text-purple-400 transition">兌換流程</a></li>
+                        <li><a href="#verification" class="text-gray-400 hover:text-purple-400 transition">驗證系統</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-purple-400 transition">價格體系</a></li>
+                    </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>Support</h3>
-                    <a href="#help">Help Center</a>
-                    <a href="#contact">Contact Us</a>
-                    <a href="#cultural-guide">Cultural Guidelines</a>
-                    <a href="#safety">Safety Instructions</a>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">客服支持</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-2"></i>
+                            <span>+852 3008 8888</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span>support@ancestorexchange.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fab fa-weixin mt-1 mr-2"></i>
+                            <span>AncestorExchange客服</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-2"></i>
+                            <span>24/7 全天候支持</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>Company</h3>
-                    <a href="#about">About Us</a>
-                    <a href="#investors">Investor Relations</a>
-                    <a href="#privacy">Privacy Policy</a>
-                    <a href="#terms">Terms of Service</a>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">法律信息</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-purple-400 transition">服務條款</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-purple-400 transition">隱私政策</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-purple-400 transition">退換貨政策</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-purple-400 transition">防偽說明</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-purple-400 transition">合規聲明</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 AncestorExchange Pte Ltd. All rights reserved. | Singapore 048616</p>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 mb-4 md:mb-0">
+                        © 2025 AncestorExchange Technology Co., Ltd. 保留所有權利。
+                    </p>
+                    <div class="flex space-x-6">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0MCAyNCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iIzAwNTFBNSIvPjx0ZXh0IHg9IjIwIiB5PSIxNSIgZm9udC1zaXplPSI4IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VklTQTwvdGV4dD48L3N2Zz4=" alt="Visa" class="h-6">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0MCAyNCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iI0VCMDAxQiIvPjx0ZXh0IHg9IjIwIiB5PSIxNSIgZm9udC1zaXplPSI2IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TWFzdGVyQ2FyZDwvdGV4dD48L3N2Zz4=" alt="MasterCard" class="h-6">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0MCAyNCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iIzAwOUNEQSIvPjx0ZXh0IHg9IjIwIiB5PSIxNSIgZm9udC1zaXplPSI2IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QWxpcGF5PC90ZXh0Pjwvc3ZnPg==" alt="Alipay" class="h-6">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0MCAyNCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iIzA5QjEzMiIvPjx0ZXh0IHg9IjIwIiB5PSIxNSIgZm9udC1zaXplPSI2IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+V2VDaGF0UGF5PC90ZXh0Pjwvc3ZnPg==" alt="WeChat Pay" class="h-6">
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- 貨幣詳情模態框 -->
+    <!-- 中華天地銀行模態框 -->
+    <div id="china-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('china-modal')">&times;</span>
+            <div class="p-8">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div>
+                        <div class="w-full h-64 bg-gradient-to-r from-red-600 to-yellow-500 rounded-xl mb-6 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <h3 class="text-3xl font-bold mb-2">天堂通寶</h3>
+                                <p class="text-lg">中華天地銀行</p>
+                                <p class="text-sm opacity-90 mt-2">Heaven Universal Bank</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">兌換比例</span>
+                                <span class="text-yellow-400">1人民幣 = 10,000天堂通寶</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">手續費率</span>
+                                <span class="text-red-400">7%（含印刷+配送）</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">最低兌換</span>
+                                <span class="text-green-400">¥68</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">產品詳情</h3>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">設計特色</h4>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li>• 主色調：傳統紅色和金色</li>
+                                    <li>• 正面：玉皇大帝或觀音菩薩頭像</li>
+                                    <li>• 背面：天宮建築群圖案</li>
+                                    <li>• 防偽：多重防偽技術，二維碼驗證</li>
+                                    <li>• 尺寸：16.5cm × 7.8cm（標準尺寸）</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">面額設置</h4>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">1萬</div>
+                                        <div class="text-xs text-gray-400">天堂通寶</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">5萬</div>
+                                        <div class="text-xs text-gray-400">天堂通寶</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">10萬</div>
+                                        <div class="text-xs text-gray-400">天堂通寶</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">100萬</div>
+                                        <div class="text-xs text-gray-400">天堂通寶</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">文化元素</h4>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li>• 繁體中文（港澳台）/ 簡體中文（大陸）</li>
+                                    <li>• 印有"孝道傳承，功德無量"等傳統寄語</li>
+                                    <li>• 融入八卦、蓮花、雲龍等傳統圖案</li>
+                                    <li>• 符合中華文化審美和價值觀</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button class="btn-primary px-8 py-3 rounded-full w-full">
+                                    <i class="fas fa-shopping-cart mr-2"></i>
+                                    立即兌換天堂通寶
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 日本あの世銀行模態框 -->
+    <div id="japan-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('japan-modal')">&times;</span>
+            <div class="p-8">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div>
+                        <div class="w-full h-64 bg-gradient-to-r from-purple-600 to-yellow-500 rounded-xl mb-6 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <h3 class="text-3xl font-bold mb-2">極楽円</h3>
+                                <p class="text-lg">あの世銀行</p>
+                                <p class="text-sm opacity-90 mt-2">Afterlife Bank of Japan</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">兌換比例</span>
+                                <span class="text-yellow-400">1人民幣 = 150極楽円</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">手續費率</span>
+                                <span class="text-red-400">7%（含印刷+配送）</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">最低兌換</span>
+                                <span class="text-green-400">¥72</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">產品詳情</h3>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">設計特色</h4>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li>• 主色調：庄重的紫色和金色</li>
+                                    <li>• 正面：阿彌陀佛或地藏菩薩頭像</li>
+                                    <li>• 背面：極樂淨土風景圖</li>
+                                    <li>• 特色：融入櫻花、菊花、鶴等日本元素</li>
+                                    <li>• 符合日本人對「美」的審美標準</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">面額設置</h4>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">1萬円</div>
+                                        <div class="text-xs text-gray-400">極楽円</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">5萬円</div>
+                                        <div class="text-xs text-gray-400">極楽円</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">10萬円</div>
+                                        <div class="text-xs text-gray-400">極楽円</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">100萬円</div>
+                                        <div class="text-xs text-gray-400">極楽円</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">文化適配</h4>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li>• 使用日文漢字和假名混合</li>
+                                    <li>• 印有「南無阿彌陀佛」等佛教經文</li>
+                                    <li>• 結合盂蘭盆節傳統</li>
+                                    <li>• 適合在日華人和佛教徒使用</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button class="btn-primary px-8 py-3 rounded-full w-full">
+                                    <i class="fas fa-shopping-cart mr-2"></i>
+                                    立即兌換極楽円
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 韓國저승은행模態框 -->
+    <div id="korea-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('korea-modal')">&times;</span>
+            <div class="p-8">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div>
+                        <div class="w-full h-64 bg-gradient-to-r from-green-600 to-blue-600 rounded-xl mb-6 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <h3 class="text-3xl font-bold mb-2">저승원</h3>
+                                <p class="text-lg">저승은행</p>
+                                <p class="text-sm opacity-90 mt-2">Afterworld Bank of Korea</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">兌換比例</span>
+                                <span class="text-yellow-400">1人民幣 = 1,300저승원</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">手續費率</span>
+                                <span class="text-red-400">7%（含印刷+配送）</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <span class="font-semibold">最低兌換</span>
+                                <span class="text-green-400">¥72</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">產品詳情</h3>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">設計特色</h4>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li>• 主色調：傳統韓色（丹青）的藍綠色調</li>
+                                    <li>• 正面：關帝或文昌帝君頭像</li>
+                                    <li>• 背面：한옥（韓屋）建築群</li>
+                                    <li>• 特色：융入무궁화（木槿花）、한복文樣</li>
+                                    <li>• 體現韓國重視가문（家門）傳統</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">面額設置</h4>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">만원</div>
+                                        <div class="text-xs text-gray-400">저승원</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">오만원</div>
+                                        <div class="text-xs text-gray-400">저승원</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">십만원</div>
+                                        <div class="text-xs text-gray-400">저승원</div>
+                                    </div>
+                                    <div class="p-3 bg-gray-800 rounded text-center">
+                                        <div class="font-bold text-yellow-400">백만원</div>
+                                        <div class="text-xs text-gray-400">저승원</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-purple-400 mb-3">文化特色</h4>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li>• 使用韓文한글和한자（漢字）</li>
+                                    <li>• 印有「효도」（孝道）等儒家道德觀念</li>
+                                    <li>• 結合추석、설날等傳統節日</li>
+                                    <li>• 適合在韓華人和重視家族傳統的用戶</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button class="btn-primary px-8 py-3 rounded-full w-full">
+                                    <i class="fas fa-shopping-cart mr-2"></i>
+                                    立即兌換저승원
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 其他貨幣模態框省略，結構類似 -->
+    <!-- 越南模態框 -->
+    <div id="vietnam-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('vietnam-modal')">&times;</span>
+            <div class="p-8">
+                <h2 class="text-2xl font-bold mb-4 text-center">Tiền Âm phủ - 越南陰府錢</h2>
+                <p class="text-center text-gray-400 mb-6">Ngân hàng Âm phủ | 兌換比例：1:25,000 | 手續費：6.5%</p>
+                <div class="text-center">
+                    <button class="btn-primary px-8 py-3 rounded-full">
+                        立即兌換
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="singapore-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('singapore-modal')">&times;</span>
+            <div class="p-8">
+                <h2 class="text-2xl font-bold mb-4 text-center">Celestial Dollar - 新加坡多元文化版</h2>
+                <p class="text-center text-gray-400 mb-6">天地銀行 (多元版) | 兌換比例：1:1,000 | 手續費：6%</p>
+                <div class="text-center">
+                    <button class="btn-primary px-8 py-3 rounded-full">
+                        立即兌換
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="usa-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('usa-modal')">&times;</span>
+            <div class="p-8">
+                <h2 class="text-2xl font-bold mb-4 text-center">Eternal Dollar - 美國國際版</h2>
+                <p class="text-center text-gray-400 mb-6">Universal Bank | 兌換比例：1:10,000 | 手續費：7.5%</p>
+                <div class="text-center">
+                    <button class="btn-primary px-8 py-3 rounded-full">
+                        立即兌換
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="uk-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('uk-modal')">&times;</span>
+            <div class="p-8">
+                <h2 class="text-2xl font-bold mb-4 text-center">Sacred Pound - 英國經典版</h2>
+                <p class="text-center text-gray-400 mb-6">Universal Bank UK | 兌換比例：1:1,000 | 手續費：8%</p>
+                <div class="text-center">
+                    <button class="btn-primary px-8 py-3 rounded-full">
+                        立即兌換
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="eu-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('eu-modal')">&times;</span>
+            <div class="p-8">
+                <h2 class="text-2xl font-bold mb-4 text-center">Celestial Euro - 歐盟聯盟版</h2>
+                <p class="text-center text-gray-400 mb-6">Universal Bank EU | 兌換比例：1:1,000 | 手續費：7.5%</p>
+                <div class="text-center">
+                    <button class="btn-primary px-8 py-3 rounded-full">
+                        立即兌換
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Smooth scrolling for navigation links
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.add('open');
+        });
+        
+        document.querySelector('.mobile-menu-close').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.remove('open');
+        });
+        
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
+                
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                        behavior: 'smooth'
                     });
                 }
+                
+                // Close mobile menu if open
+                document.querySelector('.mobile-menu').classList.remove('open');
             });
         });
 
-        // Header background on scroll
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(0,0,0,0.95)';
-            } else {
-                header.style.background = 'rgba(0,0,0,0.9)';
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }
-        });
+        }
 
-        // Add loading animation to cards
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // Observe all cards
-        document.querySelectorAll('.feature-card, .currency-card, .step').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.card, .process-step, .currency-card').forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'all 0.6s ease';
+                observer.observe(element);
+            });
+
+            // Currency cards hover effect
+            document.querySelectorAll('.currency-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Stats counter animation
+            const statsNumbers = document.querySelectorAll('.stats-number');
+            statsNumbers.forEach(stat => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            animateValue(entry.target, 0, parseInt(entry.target.textContent), 2000);
+                        }
+                    });
+                });
+                observer.observe(stat);
+            });
         });
+
+        function animateValue(element, start, end, duration) {
+            if (element.textContent.includes('%')) {
+                // For percentage values
+                const endValue = parseFloat(element.textContent);
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    element.textContent = (progress * endValue).toFixed(1) + '%';
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            } else if (element.textContent.includes('+')) {
+                // For values with +
+                const endValue = parseInt(element.textContent);
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    element.textContent = Math.floor(progress * endValue) + '+';
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            } else {
+                // For regular numbers
+                const endValue = parseInt(element.textContent);
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    element.textContent = Math.floor(progress * endValue);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+        }
+
+        // Floating currency symbols animation enhancement
+        function createFloatingSymbol() {
+            const symbols = ['¥', '$', '€', '£', '₩', '円', '₹', '₽', '₦', '₿'];
+            const symbol = document.createElement('div');
+            symbol.className = 'currency-symbol';
+            symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            symbol.style.left = Math.random() * 100 + '%';
+            symbol.style.animationDelay = '0s';
+            symbol.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            document.body.appendChild(symbol);
+
+            // Remove symbol after animation
+            setTimeout(() => {
+                if (symbol.parentNode) {
+                    symbol.parentNode.removeChild(symbol);
+                }
+            }, 25000);
+        }
+
+        // Create new floating symbols periodically
+        setInterval(createFloatingSymbol, 3000);
+
+        // Enhanced scroll effects
+        let ticking = false;
+        function updateScrollEffects() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            // Parallax effect for hero background
+            const heroBackground = document.querySelector('.hero-bg');
+            if (heroBackground) {
+                heroBackground.style.transform = `translateY(${rate}px)`;
+            }
+            
+            ticking = false;
+        }
+
+        function requestScrollTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateScrollEffects);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestScrollTick);
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+            
+            // Stagger animation for hero content
+            const heroElements = document.querySelectorAll('.hero h1, .hero p, .hero .btn-primary, .hero .btn-secondary, .hero .stats-number');
+            heroElements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'all 0.8s ease';
+                
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // Enhanced currency card interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const currencyCards = document.querySelectorAll('.currency-card');
+            
+            currencyCards.forEach(card => {
+                // Add ripple effect on click
+                card.addEventListener('click', function(e) {
+                    const ripple = document.createElement('div');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(139, 92, 246, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                        z-index: 1;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+                
+                // Add hover glow effect
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 20px 40px rgba(245, 158, 11, 0.4), 0 0 30px rgba(139, 92, 246, 0.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+            
+            .loaded .currency-symbol {
+                animation-play-state: running;
+            }
+            
+            .loaded {
+                opacity: 1;
+            }
+            
+            body {
+                transition: opacity 0.3s ease;
+            }
+            
+            .card {
+                will-change: transform;
+            }
+            
+            .currency-card {
+                will-change: transform, box-shadow;
+            }
+            
+            .hero-bg {
+                will-change: transform;
+            }
+            
+            /* Custom scrollbar */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: #1a1a1a;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: linear-gradient(135deg, var(--primary), var(--secondary));
+                border-radius: 10px;
+            }
+            
+            ::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(135deg, var(--secondary), var(--accent));
+            }
+            
+            /* Loading animation */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .hero > * {
+                animation: fadeInUp 0.8s ease forwards;
+            }
+            
+            /* Enhanced button effects */
+            .btn-primary, .btn-secondary {
+                position: relative;
+                overflow: hidden;
+                z-index: 1;
+            }
+            
+            .btn-primary::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s ease;
+                z-index: -1;
+            }
+            
+            .btn-primary:hover::before {
+                left: 100%;
+            }
+            
+            /* Modal animations */
+            .modal {
+                backdrop-filter: blur(10px);
+                animation: modalFadeIn 0.3s ease;
+            }
+            
+            @keyframes modalFadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            
+            .modal-content {
+                animation: modalSlideIn 0.3s ease;
+            }
+            
+            @keyframes modalSlideIn {
+                from {
+                    transform: translateY(-50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add performance optimization
+        if ('IntersectionObserver' in window) {
+            const lazyImages = document.querySelectorAll('[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            lazyImages.forEach(img => imageObserver.observe(img));
+        }
+
+        // Add theme persistence
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-theme');
+        }
+
+        // Add smooth reveal animations for sections
+        const sections = document.querySelectorAll('section');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            section.classList.add('animate-section');
+            sectionObserver.observe(section);
+        });
+
+        // Add final CSS for section animations
+        const sectionStyle = document.createElement('style');
+        sectionStyle.textContent = `
+            .animate-section {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .animate-section.animate-in {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .animate-section:nth-child(even) {
+                transform: translateY(40px) translateX(-20px);
+            }
+            
+            .animate-section:nth-child(even).animate-in {
+                transform: translateY(0) translateX(0);
+            }
+        `;
+        document.head.appendChild(sectionStyle);
     </script>
 </body>
 </html>
